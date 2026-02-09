@@ -46,7 +46,6 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
-          ),
           const Divider(),
 
           // ── Pairing ──────────────────────────────────────────────────

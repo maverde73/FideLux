@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/email_config.dart';
-import '../../domain/repositories/email_repository.dart';
-import '../../presentation/providers/inbox_providers.dart';
+import '../../../domain/entities/email_config.dart';
+import '../../providers/inbox_providers.dart';
 
 // Localization needed. I'll use placeholders or keys assuming they exist as planned.
 // l10n.emailConfigTitle etc.
@@ -130,7 +129,7 @@ class _EmailConfigScreenState extends ConsumerState<EmailConfigScreen> {
     );
     
     await ref.read(emailRepositoryProvider).configure(config);
-    ref.refresh(emailConfigProvider); // Refresh provider
+    ref.invalidate(emailConfigProvider);
     
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Configuration saved.')));

@@ -4,31 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
 
-import '../../domain/entities/inbox_message.dart'; // Domain class (not Drift)
-// We need to map Drift InboxMessage to Domain InboxMessage or use Drift class directly.
-// The provider returns `List<InboxMessage>`. 
-// If `InboxDao` returns Drift class, we should map it in provider or Dao.
-// `InboxDao.getPendingMessages` returns `List<InboxMessage>` (Drift).
-// Domain entity is `InboxMessage`. 
-// Conflict!
-// Same issue as `ChainEvent`.
-// I should use `as db` import in Dao too? 
-// Or create mapper.
+import 'package:fidelux/data/local_db/app_database.dart' as db;
+import '../../providers/accounting_providers.dart';
 
-// Assuming provider returns List of Domain `InboxMessage`.
-// I need `inboxMessagesProvider` in `inbox_providers.dart` (D04) to use Dao?
-// Or create new provider in `accounting_providers.dart`?
-// D04 provider was `inboxMessagesProvider`.
-// Let's replace it or use new one.
-
-import '../providers/accounting_providers.dart'; // inboxDaoProvider
-// import '../providers/inbox_providers.dart'; // Old one?
-
-// Let's define the new stream provider here or in `accounting_providers.dart`.
-// In `accounting_providers.dart` I didn't define stream for inbox.
-// I'll define it locally or there.
-
-final inboxStreamProvider = StreamProvider<List<dynamic>>((ref) { // dynamic to avoid type error now
+final inboxStreamProvider = StreamProvider<List<db.InboxMessage>>((ref) {
   final dao = ref.watch(inboxDaoProvider);
   return dao.watchPendingMessages();
 });
@@ -66,11 +45,6 @@ class InboxScreen extends ConsumerWidget {
               final msg = messages[index];
               // msg is Drift class `InboxMessage`.
               // It has fields: id, senderEmail, subject, status...
-              
-              final isVerified = msg.status == 'verified';
-              // If status is rejected, it might not be in "pending" list?
-              // Dao `watchPendingMessages` filters by 'verified' & 'not processsed'.
-              // So all here are verifiable.
               
               return ListTile(
                 leading: Icon(Icons.mark_email_read, color: Colors.green),

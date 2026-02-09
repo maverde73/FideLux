@@ -17,7 +17,6 @@ void main() {
   late DashboardService service;
 
   final now = DateTime.now().toUtc();
-  final monthStart = DateTime.utc(now.year, now.month, 1);
 
   setUp(() {
     db = AppDatabase.forTesting(NativeDatabase.memory());

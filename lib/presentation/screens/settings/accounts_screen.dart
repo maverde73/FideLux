@@ -1,12 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
 
-import '../../../domain/entities/transaction_category.dart';
-import '../../providers/accounting_providers.dart'; // To be created
-import '../../../data/local_db/app_database.dart'; // For Account class
+import '../../providers/accounting_providers.dart';
 
 class AccountsScreen extends ConsumerWidget {
   const AccountsScreen({super.key});
@@ -162,7 +159,6 @@ class _AddAccountDialogState extends ConsumerState<AddAccountDialog> {
 
   Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
-      final l10n = L.of(context)!;
       final name = _nameController.text;
       final balanceStr = _balanceController.text.replaceAll(',', '.');
       final balanceDouble = double.parse(balanceStr);

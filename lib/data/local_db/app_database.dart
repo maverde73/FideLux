@@ -27,7 +27,10 @@ class Accounts extends Table {
 }
 
 class ChainEvents extends Table {
-  IntColumn get sequence => integer().autoIncrement()();
+  IntColumn get sequence => integer()();
+
+  @override
+  Set<Column> get primaryKey => {sequence};
   TextColumn get previousHash => text().withLength(min: 64, max: 64)();
   DateTimeColumn get timestamp => dateTime()();
   TextColumn get eventType => text()();

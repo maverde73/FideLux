@@ -1,6 +1,5 @@
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:enough_mail/enough_mail.dart';
@@ -95,27 +94,23 @@ class EmailService implements EmailRepository {
       await client.connectToServer(config.imapHost, config.imapPort, isSecure: config.useSsl);
       await client.login(config.email, config.password);
       
-      final inbox = await client.selectInbox();
+      await client.selectInbox();
       // Search for UNSEEN messages from Sharer
-      // enough_mail query builder:
-      final searchCriteria = MessageSearchCriteria.and([
-        MessageSearchCriteria.unseen(),
-        MessageSearchCriteria.from(config.sharerEmail),
-      ]);
-      
-      final fetchResult = await client.searchMessages(searchCriteria: searchCriteria);
+      final fetchResult = await client.searchMessages(
+        searchCriteria: 'UNSEEN FROM "${config.sharerEmail}"',
+      );
       if (fetchResult.matchingSequence == null || fetchResult.matchingSequence!.isEmpty) {
         return [];
       }
 
-      final messages = await client.fetchMessages(
-          fetchResult.matchingSequence!, 
-          'BODY.PEEK[]' // Peek avoids marking as read automatically, or valid macro
+      final fetchMessagesResult = await client.fetchMessages(
+          fetchResult.matchingSequence!,
+          'BODY.PEEK[]',
       );
 
       List<InboxMessage> processedMessages = [];
 
-      for (final msg in messages) {
+      for (final msg in fetchMessagesResult.messages) {
         // Parse
         final parsed = await _parseMessage(msg, config.sharerEmail);
         if (parsed != null) {
@@ -156,17 +151,11 @@ class EmailService implements EmailRepository {
       await client.login(config.email, config.password);
       await client.selectInbox();
 
-      // Search by Message-ID header
-      // Note: MessageID in entities might be cleaned.
-      // Search criteria for header:
-      // Imap search for HEADER "Message-ID" "<id>"
-      // enough_mail doesn't support HEADER search easily in high level?
-      // It does support `MessageSearchCriteria.header(name, value)`.
-      // NOTE: Message-ID usually contains <...>.
-      
-      final result = await client.searchMessages(searchCriteria: MessageSearchCriteria.header('Message-ID', emailMessageId));
+      final result = await client.searchMessages(
+        searchCriteria: 'HEADER "Message-ID" "$emailMessageId"',
+      );
       if (result.matchingSequence != null && result.matchingSequence!.isNotEmpty) {
-        await client.markMessagesAsRead(result.matchingSequence!);
+        await client.markSeen(result.matchingSequence!);
       }
       
       await client.logout();
@@ -217,7 +206,7 @@ class EmailService implements EmailRepository {
     final subject = msg.decodeSubject() ?? '';
     final date = msg.decodeDate() ?? DateTime.now();
     
-    final signature = msg.getHeader('X-FideLux-Signature')?.value;
+    final signature = msg.getHeader('X-FideLux-Signature')?.first.value;
     
     // Body extraction
     // enough_mail: msg.decodeTextPlainPart() or msg.body
@@ -225,16 +214,13 @@ class EmailService implements EmailRepository {
     
     // Attachments
     List<MessageAttachment> attachments = [];
-    if (msg.hasParts) {
+    if (msg.parts != null && msg.parts!.isNotEmpty) {
        for (final part in msg.allPartsFlat) {
-         if (part.dispositionType == MediaDisposition.attachment || part.dispositionType == MediaDisposition.inline) {
+         final disposition = part.getHeaderContentDisposition();
+         if (disposition != null &&
+             (disposition.disposition == ContentDisposition.attachment ||
+              disposition.disposition == ContentDisposition.inline)) {
            final filename = part.decodeFileName() ?? 'unnamed';
-           // Decode content
-           // If it's text, it might return string?
-           // enough_mail generic part content decoding?
-           // We might need to access raw bytes if possible.
-           // `part.decodeContentBinary()`?
-           // The documentation says `decodeContentBinary()` returns List<int>?.
            final data = part.decodeContentBinary();
            if (data != null) {
              attachments.add(MessageAttachment(

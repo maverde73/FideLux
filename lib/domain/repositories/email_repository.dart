@@ -1,6 +1,8 @@
 
 import '../entities/email_config.dart';
 import '../entities/inbox_message.dart';
+
+abstract class EmailRepository {
   /// Configures the email connection (saving credentials securely).
   Future<void> configure(EmailConfig config);
 

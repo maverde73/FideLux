@@ -2,7 +2,6 @@
 import '../../data/local_db/daos/accounts_dao.dart';
 import '../../data/local_db/daos/transactions_dao.dart';
 import '../../data/local_db/app_database.dart';
-import '../../domain/entities/transaction_category.dart';
 
 class AccountSummary {
   final Account account;

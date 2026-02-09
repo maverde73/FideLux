@@ -1,17 +1,19 @@
 
 import 'dart:convert';
+import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/entities/chain_event.dart';
 import '../../domain/entities/event_metadata.dart';
 import '../../domain/entities/event_type.dart';
 import '../../domain/entities/crypto_identity.dart';
+import '../../domain/entities/transaction_category.dart';
 import '../../domain/repositories/chain_repository.dart';
 import '../../domain/repositories/crypto_repository.dart';
 import '../../domain/repositories/key_storage_repository.dart';
 import '../../data/local_db/daos/accounts_dao.dart';
 import '../../data/local_db/daos/transactions_dao.dart';
-import '../../data/local_db/app_database.dart'; // For Account/Transaction classes if needed
+import '../../data/local_db/app_database.dart' as db;
 
 class CreateAccount {
   final AccountsDao _accountsDao;
@@ -47,7 +49,7 @@ class CreateAccount {
     // We insert account first so transaction can reference it.
     
     await _accountsDao.insertAccount(
-      AccountsCompanion.insert(
+      db.AccountsCompanion.insert(
         id: accountId,
         name: name,
         type: type,
@@ -142,13 +144,13 @@ class CreateAccount {
     
     if (initialBalance != 0) {
       await _transactionsDao.insertTransaction(
-        TransactionsCompanion.insert(
+        db.TransactionsCompanion.insert(
           id: _uuid.v4(),
           chainEventSequence: sequence,
           accountId: accountId,
           amount: initialBalance,
           description: "Initial Balance",
-          category: TransactionCategory.incomeOther.name, // Or special category?
+          category: TransactionCategory.incomeOther,
           date: now,
         ),
       );

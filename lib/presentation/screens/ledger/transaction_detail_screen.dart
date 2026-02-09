@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
 
-import '../../data/local_db/app_database.dart'; 
-import '../providers/accounting_providers.dart';
-import '../../domain/entities/transaction_category.dart';
+import '../../../data/local_db/app_database.dart';
+import '../../providers/accounting_providers.dart';
 
 class TransactionDetailData {
   final Transaction transaction;

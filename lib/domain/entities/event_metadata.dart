@@ -46,4 +46,5 @@ enum EventSource {
   bankSync,
   system,
   ai,
+  email,
 }

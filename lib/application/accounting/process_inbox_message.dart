@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/entities/chain_event.dart';
@@ -14,7 +15,7 @@ import '../../domain/repositories/key_storage_repository.dart';
 import '../../data/local_db/daos/accounts_dao.dart';
 import '../../data/local_db/daos/transactions_dao.dart';
 import '../../data/local_db/daos/inbox_dao.dart';
-import '../../data/local_db/app_database.dart'; 
+import '../../data/local_db/app_database.dart' as db;
 
 class ProcessInboxMessage {
   final ChainRepository _chainRepository;
@@ -113,17 +114,17 @@ class ProcessInboxMessage {
 
     // 2. Create Transaction
     await _transactionsDao.insertTransaction(
-      TransactionsCompanion.insert(
+      db.TransactionsCompanion.insert(
         id: _uuid.v4(),
         chainEventSequence: sequence,
         accountId: accountId,
         amount: amount,
         description: merchant ?? message.subject ?? "Transaction",
         merchant: Value(merchant),
-        category: category.name, // String
+        category: category,
         date: opDate,
         notes: Value(notes),
-        receiptImagePath: Value(null), // Handle attachment saving later (module 06 or separate)
+        receiptImagePath: Value(null),
       ),
     );
 

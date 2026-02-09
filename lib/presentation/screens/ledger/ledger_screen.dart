@@ -4,9 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
 
-import '../../data/local_db/app_database.dart'; // Transaction class
-import '../providers/accounting_providers.dart';
-import '../../domain/entities/transaction_category.dart';
+import '../../../data/local_db/app_database.dart';
+import '../../providers/accounting_providers.dart';
 
 // Stream provider for transactions
 final recentTransactionsProvider = StreamProvider<List<Transaction>>((ref) {

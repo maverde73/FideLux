@@ -1,5 +1,4 @@
 
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -38,11 +37,6 @@ void main() {
   );
 
   test('returns rejected if no signature present', () async {
-    final unsignedMsg = msg.copyWith(sharerSignature: null); // copyWith? But constructor param is final?
-    // CopyWith implementation in InboxMessage handles it? 
-    // Wait, InboxMessage copyWith in my implementation didn't expose sharerSignature update?
-    // Let's check implementation. 
-    // Assuming I can construct a message without signature.
     final noSig = InboxMessage(
         id: '1',
         emailMessageId: 'msg1',

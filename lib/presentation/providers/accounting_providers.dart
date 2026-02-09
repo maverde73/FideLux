@@ -8,11 +8,7 @@ import '../../data/local_db/daos/inbox_dao.dart';
 import '../../data/chain/chain_service.dart';
 import '../../application/accounting/create_account.dart';
 import '../../application/accounting/process_inbox_message.dart';
-import '../../application/accounting/get_account_summary.dart';
-import '../../domain/repositories/crypto_repository.dart'; 
-import '../../domain/repositories/key_storage_repository.dart'; 
-import '../providers/core_providers.dart'; // Core providers
-import '../providers/pairing_providers.dart';
+import '../providers/core_providers.dart';
 
 // We need access to repositories.
 // Assuming we have a global DB provider.
@@ -64,14 +60,13 @@ final createAccountProvider = Provider<CreateAccount>((ref) {
   // It consumes Dao and CryptoRepo.
   
   // ChainService instantiation:
-  final db = ref.watch(databaseProvider);
   final chainDao = ref.watch(chainEventsDaoProvider);
   final cryptoRepo = ref.watch(cryptoRepositoryProvider);
-  
+
   final chainService = ChainService(chainDao, cryptoRepo);
-  
-  final keyStorage = ref.watch(keyStorageRepositoryProvider); // Need to define this provider import
-  
+
+  final keyStorage = ref.watch(keyStorageRepositoryProvider);
+
   return CreateAccount(
     accountsDao,
     chainService,
@@ -82,7 +77,6 @@ final createAccountProvider = Provider<CreateAccount>((ref) {
 });
 
 final processInboxMessageProvider = Provider<ProcessInboxMessage>((ref) {
-    final db = ref.watch(databaseProvider);
     final chainDao = ref.watch(chainEventsDaoProvider);
     final cryptoRepo = ref.watch(cryptoRepositoryProvider);
     final chainService = ChainService(chainDao, cryptoRepo);

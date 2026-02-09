@@ -6,8 +6,6 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../providers/crypto_providers.dart';
 import '../../providers/pairing_providers.dart';
-import '../../../core/extensions/context_extensions.dart';
-import '../../../domain/entities/crypto_identity.dart';
 
 class PairingScreen extends ConsumerStatefulWidget {
   const PairingScreen({super.key});

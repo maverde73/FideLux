@@ -1,28 +1,31 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/chain/chain_service.dart';
-import '../../data/crypto/crypto_service.dart';
-import '../../data/crypto/secure_key_storage.dart';
 import '../../domain/entities/crypto_identity.dart';
 import '../../domain/repositories/chain_repository.dart';
-import '../../domain/repositories/crypto_repository.dart';
-import '../../domain/repositories/key_storage_repository.dart';
+import 'core_providers.dart';
+import 'accounting_providers.dart';
 
-// --- Data Layer Providers ---
-
-/// Provider for the singleton [CryptoRepository].
-final cryptoRepositoryProvider = Provider<CryptoRepository>((ref) {
-  return CryptoService();
-});
-
-/// Provider for the singleton [KeyStorageRepository].
-final keyStorageProvider = Provider<KeyStorageRepository>((ref) {
-  return SecureKeyStorage();
-});
+// --- Chain Repository Provider ---
 
 /// Provider for the singleton [ChainRepository].
 final chainRepositoryProvider = Provider<ChainRepository>((ref) {
-  return ChainService(crypto: ref.read(cryptoRepositoryProvider));
+  return ChainService(
+    ref.read(chainEventsDaoProvider),
+    ref.read(cryptoRepositoryProvider),
+  );
+});
+
+// --- Role Provider ---
+
+/// Determines the user's role by checking which identity has a private key.
+final myRoleProvider = FutureProvider<Role?>((ref) async {
+  final storage = ref.read(keyStorageRepositoryProvider);
+  final keeperKey = await storage.loadPrivateKey(Role.keeper);
+  if (keeperKey != null) return Role.keeper;
+  final sharerKey = await storage.loadPrivateKey(Role.sharer);
+  if (sharerKey != null) return Role.sharer;
+  return null;
 });
 
 // --- Identity Providers ---
@@ -31,7 +34,7 @@ final chainRepositoryProvider = Provider<ChainRepository>((ref) {
 ///
 /// Returns null if no Keeper identity is stored.
 final keeperIdentityProvider = FutureProvider<CryptoIdentity?>((ref) async {
-  final storage = ref.read(keyStorageProvider);
+  final storage = ref.read(keyStorageRepositoryProvider);
   final privateKey = await storage.loadPrivateKey(Role.keeper);
   final publicKey = await storage.loadPublicKey(Role.keeper);
 
@@ -45,8 +48,8 @@ final keeperIdentityProvider = FutureProvider<CryptoIdentity?>((ref) async {
 /// WARNING: On the Keeper's device, this will likely only have the public key.
 /// On the Sharer's device, it has both.
 final sharerIdentityProvider = FutureProvider<CryptoIdentity?>((ref) async {
-  final storage = ref.read(keyStorageProvider);
-  final privateKey = await storage.loadPrivateKey(Role.sharer); // Null on Keeper device
+  final storage = ref.read(keyStorageRepositoryProvider);
+  final privateKey = await storage.loadPrivateKey(Role.sharer);
   final publicKey = await storage.loadPublicKey(Role.sharer);
 
   if (publicKey == null) return null;

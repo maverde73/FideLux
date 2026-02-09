@@ -17,23 +17,52 @@ class ChainService implements ChainRepository {
   ChainService(this._dao, this._cryptoRepository);
 
   @override
-  Future<void> appendEvent(ChainEvent event) async {
-    // 1. Verify signatures before inserting? 
+  Future<ChainEvent> appendEvent(ChainEvent event) async {
+    // Normalize timestamp to second precision to match Drift's DB storage
+    final unixSeconds = event.timestamp.millisecondsSinceEpoch ~/ 1000;
+    final normalizedTs = DateTime.fromMillisecondsSinceEpoch(
+      unixSeconds * 1000,
+      isUtc: true,
+    );
+
+    // Recompute hash if timestamp precision changed
+    final normalizedEvent = normalizedTs == event.timestamp
+        ? event
+        : ChainEvent(
+            sequence: event.sequence,
+            previousHash: event.previousHash,
+            timestamp: normalizedTs,
+            eventType: event.eventType,
+            payload: event.payload,
+            sharerSignature: event.sharerSignature,
+            keeperSignature: event.keeperSignature,
+            metadata: event.metadata,
+            hash: ChainEvent.computeHash(
+              sequence: event.sequence,
+              previousHash: event.previousHash,
+              timestamp: normalizedTs,
+              eventType: event.eventType,
+              payload: event.payload,
+              keeperSignature: event.keeperSignature,
+            ),
+          );
+
     final entry = db.ChainEventsCompanion(
-      sequence: Value(event.sequence),
-      previousHash: Value(event.previousHash),
-      timestamp: Value(event.timestamp),
-      eventType: Value(event.eventType.name),
-      payload: Value(jsonEncode(event.payload)),
-      sharerSignature: Value(event.sharerSignature),
-      keeperSignature: Value(event.keeperSignature),
-      metadataSource: Value(event.metadata.source.name),
-      metadataTrustLevel: Value(event.metadata.trustLevel),
-      metadataAiEngine: Value(event.metadata.aiEngine),
-      hash: Value(event.hash),
+      sequence: Value(normalizedEvent.sequence),
+      previousHash: Value(normalizedEvent.previousHash),
+      timestamp: Value(normalizedEvent.timestamp),
+      eventType: Value(normalizedEvent.eventType.name),
+      payload: Value(jsonEncode(normalizedEvent.payload)),
+      sharerSignature: Value(normalizedEvent.sharerSignature),
+      keeperSignature: Value(normalizedEvent.keeperSignature),
+      metadataSource: Value(normalizedEvent.metadata.source.name),
+      metadataTrustLevel: Value(normalizedEvent.metadata.trustLevel),
+      metadataAiEngine: Value(normalizedEvent.metadata.aiEngine),
+      hash: Value(normalizedEvent.hash),
     );
 
     await _dao.insertEvent(entry);
+    return normalizedEvent;
   }
 
   @override
@@ -44,49 +73,64 @@ class ChainService implements ChainRepository {
   }
 
   @override
-  Future<List<ChainEvent>> getHistory() async {
-    // This loads everything? MVP: yes.
+  Future<List<ChainEvent>> getFullChain() async {
     final rows = await _dao.getAllEvents();
     return rows.map(_mapToDomain).toList();
   }
 
   @override
-  Future<bool> verifyChain() async {
-    final history = await getHistory();
-    if (history.isEmpty) return true;
+  Future<ChainVerificationResult> verifyChain() async {
+    final history = await getFullChain();
+    if (history.isEmpty) {
+      return const ChainVerificationResult(isValid: true);
+    }
 
-    // Verify hash links
     for (int i = 0; i < history.length; i++) {
       final current = history[i];
-      
-      // 1. Verify hash integrity
-      if (!current.isValid) return false;
 
-      // 2. Verify previous hash link (except genesis)
+      if (!current.isValid) {
+        return ChainVerificationResult(
+          isValid: false,
+          brokenAtSequence: current.sequence,
+          errorMessage: 'Hash integrity check failed at sequence ${current.sequence}',
+        );
+      }
+
       if (i > 0) {
         final previous = history[i - 1];
-        if (current.previousHash != previous.hash) return false;
-        if (current.sequence != previous.sequence + 1) return false;
+        if (current.previousHash != previous.hash) {
+          return ChainVerificationResult(
+            isValid: false,
+            brokenAtSequence: current.sequence,
+            errorMessage: 'Previous hash mismatch at sequence ${current.sequence}',
+          );
+        }
+        if (current.sequence != previous.sequence + 1) {
+          return ChainVerificationResult(
+            isValid: false,
+            brokenAtSequence: current.sequence,
+            errorMessage: 'Sequence gap at ${current.sequence}',
+          );
+        }
       } else {
-        // Genesis check
-        if (current.sequence != 0) return false;
-        if (current.previousHash != '0' * 64) return false;
+        // First event in chain must reference the null hash
+        if (current.previousHash != '0' * 64) {
+          return ChainVerificationResult(
+            isValid: false,
+            brokenAtSequence: current.sequence,
+            errorMessage: 'Genesis event has wrong previousHash',
+          );
+        }
       }
-      
-      // 3. Verify signatures?
-      // Expensive to do all.
-      // We rely on append logic.
-      // But full re-verification might be requested.
-      // For MVP, we check basic hash integrity.
     }
-    return true;
+    return const ChainVerificationResult(isValid: true);
   }
 
-  ChainEvent _mapToDomain(db.ChainEvent row) { 
+  ChainEvent _mapToDomain(db.ChainEvent row) {
     return ChainEvent(
       sequence: row.sequence,
       previousHash: row.previousHash,
-      timestamp: row.timestamp,
+      timestamp: row.timestamp.toUtc(),
       eventType: EventType.values.byName(row.eventType),
       payload: jsonDecode(row.payload) as Map<String, dynamic>,
       sharerSignature: row.sharerSignature,

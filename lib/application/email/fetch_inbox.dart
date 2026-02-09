@@ -3,7 +3,7 @@ import 'package:drift/drift.dart';
 import '../../domain/entities/inbox_message.dart';
 import '../../domain/repositories/email_repository.dart';
 import '../../data/local_db/daos/inbox_dao.dart';
-import '../../data/local_db/app_database.dart'; // Companion
+import '../../data/local_db/app_database.dart' as db;
 
 class FetchInbox {
   final EmailRepository _repository;
@@ -27,7 +27,7 @@ class FetchInbox {
         // DAO `insertMessage` uses insertOrIgnore mode.
         
         await _inboxDao.insertMessage(
-          InboxMessagesCompanion(
+          db.InboxMessagesCompanion(
             id: Value(msg.id),
             emailMessageId: Value(msg.emailMessageId),
             receivedAt: Value(msg.receivedAt),

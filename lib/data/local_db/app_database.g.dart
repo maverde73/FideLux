@@ -486,11 +486,7 @@ class $ChainEventsTable extends ChainEvents
   @override
   late final GeneratedColumn<int> sequence = GeneratedColumn<int>(
       'sequence', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _previousHashMeta =
       const VerificationMeta('previousHash');
   @override

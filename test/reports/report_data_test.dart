@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:fidelux/data/local_db/app_database.dart';
 import 'package:fidelux/data/local_db/daos/transactions_dao.dart';

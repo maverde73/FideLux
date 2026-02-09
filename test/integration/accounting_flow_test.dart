@@ -1,4 +1,6 @@
 
+import 'dart:typed_data';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:drift/native.dart';
 import 'package:fidelux/data/local_db/app_database.dart';
@@ -7,11 +9,10 @@ import 'package:fidelux/data/local_db/daos/chain_events_dao.dart';
 import 'package:fidelux/data/local_db/daos/transactions_dao.dart';
 import 'package:fidelux/data/chain/chain_service.dart';
 import 'package:fidelux/application/accounting/create_account.dart';
+import 'package:fidelux/domain/entities/crypto_identity.dart';
 import 'package:fidelux/domain/repositories/crypto_repository.dart';
 import 'package:fidelux/domain/repositories/key_storage_repository.dart';
 import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
-import 'dart:convert';
 
 // Mock Crypto/KeyStorage
 class MockCryptoRepository extends Mock implements CryptoRepository {
@@ -21,7 +22,7 @@ class MockCryptoRepository extends Mock implements CryptoRepository {
 
 class MockKeyStorageRepository extends Mock implements KeyStorageRepository {
   @override
-  Future<List<int>?> loadPrivateKey(Role role) async => [1, 2, 3];
+  Future<Uint8List?> loadPrivateKey(Role role) async => Uint8List.fromList([1, 2, 3]);
 }
 
 void main() {
