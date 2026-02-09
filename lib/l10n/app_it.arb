@@ -15,5 +15,49 @@
   "settingsLanguageIt": "Italiano",
   "settingsLanguageEn": "English",
   "placeholderScreenTitle": "{screenName} - In arrivo",
-  "currencyFormat": "€{amount}"
+  "currencyFormat": "€{amount}",
+  "@currencyFormat": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  },
+
+  "accountsTitle": "Conti",
+  "accountsAdd": "Aggiungi Conto",
+  "accountsName": "Nome",
+  "accountsType": "Tipo",
+  "accountsInitialBalance": "Saldo Iniziale",
+  "accountTypeChecking": "Corrente",
+  "accountTypeSavings": "Risparmio",
+  "accountTypeCreditCard": "Carta di Credito",
+  "accountTypeCash": "Contanti",
+  "accountTypeOther": "Altro",
+  
+  "ledgerTitle": "Libro Mastro",
+  "ledgerFilterAll": "Tutti",
+  "ledgerFilterAccount": "Conto",
+  "ledgerFilterCategory": "Categoria",
+  "ledgerFilterPeriod": "Periodo",
+  "ledgerEmpty": "Nessuna transazione trovata",
+  
+  "processMessageTitle": "Elabora Transazione",
+  "processMessageMerchant": "Esercente / Descrizione",
+  "processMessageAmount": "Importo",
+  "processMessageCategory": "Categoria",
+  "processMessageAccount": "Conto",
+  "processMessageDate": "Data",
+  "processMessageNotes": "Note",
+  "processMessageConfirm": "Conferma",
+  "processMessageConfirmDialog": "Confermi i dettagli? Verrà aggiunto alla catena.",
+  
+  "transactionDetailTitle": "Dettagli Transazione",
+  "transactionDetailChainInfo": "Verifica Catena",
+  "transactionDetailSequence": "Sequenza #{sequence}",
+  "@transactionDetailSequence": {
+      "placeholders": {
+          "sequence": { "type": "String" }
+      }
+  },
+  "transactionDetailSignatureVerified": "Firma Verificata",
+  "transactionDetailRequestClarification": "Richiedi Chiarimento"
 }

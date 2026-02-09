@@ -25,5 +25,44 @@
     "placeholders": {
       "amount": { "type": "String" }
     }
-  }
+  },
+  
+  "accountsTitle": "Accounts",
+  "accountsAdd": "Add Account",
+  "accountsName": "Name",
+  "accountsType": "Type",
+  "accountsInitialBalance": "Initial Balance",
+  "accountTypeChecking": "Checking",
+  "accountTypeSavings": "Savings",
+  "accountTypeCreditCard": "Credit Card",
+  "accountTypeCash": "Cash",
+  "accountTypeOther": "Other",
+  
+  "ledgerTitle": "Ledger",
+  "ledgerFilterAll": "All",
+  "ledgerFilterAccount": "Account",
+  "ledgerFilterCategory": "Category",
+  "ledgerFilterPeriod": "Period",
+  "ledgerEmpty": "No transactions found",
+  
+  "processMessageTitle": "Process Transaction",
+  "processMessageMerchant": "Merchant / Description",
+  "processMessageAmount": "Amount",
+  "processMessageCategory": "Category",
+  "processMessageAccount": "Account",
+  "processMessageDate": "Date",
+  "processMessageNotes": "Notes",
+  "processMessageConfirm": "Confirm",
+  "processMessageConfirmDialog": "Confirm transaction details? This will append to chain.",
+  
+  "transactionDetailTitle": "Transaction Details",
+  "transactionDetailChainInfo": "Chain Verification",
+  "transactionDetailSequence": "Sequence #{sequence}",
+  "@transactionDetailSequence": {
+      "placeholders": {
+          "sequence": { "type": "String" }
+      }
+  },
+  "transactionDetailSignatureVerified": "Signature Verified",
+  "transactionDetailRequestClarification": "Request Clarification"
 }

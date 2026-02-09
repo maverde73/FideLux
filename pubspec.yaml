@@ -25,11 +25,10 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.0
 
   # Crittografia
-  pointycastle: ^3.0.0
-  convert: ^3.0.0
+  # Removed pointycastle & convert (unused)
 
-  # Email (IMAP/SMTP) — commentato: nessuna versione ^3.0.0 disponibile (modulo 4)
-  # enough_mail: ^3.0.0
+  # Email (IMAP/SMTP)
+  enough_mail: ^2.1.0
 
   # AI / OCR
   google_mlkit_text_recognition: ^0.13.0
@@ -43,13 +42,15 @@ dependencies:
   flutter_secure_storage: ^9.0.0
 
   # QR Code (per pairing)
-  qr_flutter: ^4.0.0
-  mobile_scanner: ^5.0.0
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^7.1.4
 
   # Utilities
   uuid: ^4.0.0
   path_provider: ^2.0.0
   share_plus: ^9.0.0
+  cryptography: ^2.9.0
+  permission_handler: ^12.0.1
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +61,9 @@ dev_dependencies:
   drift_dev: ^2.0.0
   mockito: ^5.0.0
   build_verify: ^3.0.0
+
+dependency_overrides:
+  intl: ^0.20.2
 
 flutter:
   generate: true

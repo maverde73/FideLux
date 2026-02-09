@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
 
 import '../../../app.dart';
@@ -45,8 +46,27 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+          ),
           const Divider(),
 
+          // ── Pairing ──────────────────────────────────────────────────
+          ListTile(
+            leading: const Icon(Icons.qr_code),
+            title: const Text('Pairing (Beta)'),
+            subtitle: const Text('Scan QR code to pair'),
+            onTap: () => GoRouter.of(context).go('/settings/pairing'),
+          ),
+          const Divider(),
+
+          // ── Email Config ─────────────────────────────────────────────
+          ListTile(
+            leading: const Icon(Icons.mail_outline),
+            title: const Text('Email Configuration'),
+            subtitle: const Text('Configure IMAP/SMTP'),
+            onTap: () => GoRouter.of(context).go('/settings/email-config'),
+          ),
+          const Divider(),
+          
           // ── Placeholder ─────────────────────────────────────────────
           const SizedBox(height: 32),
           Center(
