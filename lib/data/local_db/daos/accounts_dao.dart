@@ -24,4 +24,13 @@ class AccountsDao extends DatabaseAccessor<AppDatabase> with _$AccountsDaoMixin 
   }
   
   Stream<List<Account>> watchAllAccounts() => select(accounts).watch();
+
+  Future<int> getTotalBalance() async {
+    final total = accounts.currentBalance.sum();
+    final query = selectOnly(accounts)
+      ..addColumns([total])
+      ..where(accounts.isActive.equals(true));
+    final result = await query.getSingle();
+    return result.read(total) ?? 0;
+  }
 }

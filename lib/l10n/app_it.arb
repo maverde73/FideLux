@@ -59,5 +59,102 @@
       }
   },
   "transactionDetailSignatureVerified": "Firma Verificata",
-  "transactionDetailRequestClarification": "Richiedi Chiarimento"
+  "transactionDetailRequestClarification": "Richiedi Chiarimento",
+
+  "ocrProcessing": "Analisi scontrino in corso...",
+  "ocrComplete": "Analisi completata",
+  "ocrFailed": "Impossibile leggere lo scontrino. Inserisci i dati manualmente.",
+  "ocrRawText": "Testo OCR grezzo",
+  "ocrConfidenceHigh": "Alta",
+  "ocrConfidenceMedium": "Media",
+  "ocrConfidenceLow": "Bassa",
+  "ocrSuggested": "Suggerito dall'AI",
+  "categoryGroceries": "Alimentari",
+  "categoryDining": "Ristoranti / Bar",
+  "categoryTransport": "Trasporti",
+  "categoryUtilities": "Utenze",
+  "categoryHousing": "Affitto / Mutuo",
+  "categoryHealth": "Salute / Farmacia",
+  "categoryEntertainment": "Svago",
+  "categoryClothing": "Abbigliamento",
+  "categoryEducation": "Istruzione",
+  "categoryPersonalCare": "Cura personale",
+  "categoryGifts": "Regali",
+  "categorySubscriptions": "Abbonamenti",
+  "categoryGambling": "Gioco d'azzardo",
+  "categoryCash": "Prelievo contanti",
+  "categoryOther": "Altro",
+  "categorySalary": "Stipendio",
+  "categoryRefund": "Rimborso",
+  "categoryTransfer": "Giroconto",
+  "categoryIncomeOther": "Altre entrate",
+  "gamblingAlert": "Rilevata categoria gioco d'azzardo",
+
+  "dashboardTitle": "Dashboard",
+  "dashboardScore": "Punteggio FideLux",
+  "dashboardScoreHigh": "Eccellente",
+  "dashboardScoreMedium": "Attenzione",
+  "dashboardScoreLow": "Critico",
+  "dashboardTotalBalance": "Saldo Totale",
+  "dashboardMonthExpenses": "Spese del Mese",
+  "dashboardMonthIncome": "Entrate del Mese",
+  "dashboardTransactions": "Transazioni",
+  "dashboardDocumentationRate": "Tasso Documentazione",
+  "dashboardDocumentationDays": "{documented}/{total} giorni",
+  "@dashboardDocumentationDays": {
+    "placeholders": {
+      "documented": { "type": "String" },
+      "total": { "type": "String" }
+    }
+  },
+  "dashboardTopCategories": "Categorie Principali",
+  "dashboardViewAll": "Vedi tutte",
+  "dashboardNoData": "Inizia a tracciare per vedere la dashboard",
+  "dashboardAlerts": "Alert Attivi",
+  "dashboardShowMoreAlerts": "Mostra altri {count}",
+  "@dashboardShowMoreAlerts": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  },
+  "alertAdvisory": "Avviso",
+  "alertCritical": "Critico",
+  "alertSos": "SOS",
+  "alertCategorySpike": "{category} è {percent}% sopra la media",
+  "@alertCategorySpike": {
+    "placeholders": {
+      "category": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "alertNoDocumentation": "Nessuna transazione documentata da {days} giorni",
+  "@alertNoDocumentation": {
+    "placeholders": {
+      "days": { "type": "String" }
+    }
+  },
+  "alertMultipleCashWithdrawals": "{count} prelievi contanti in 24 ore",
+  "@alertMultipleCashWithdrawals": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  },
+  "alertGamblingDetected": "Rilevata transazione gioco d'azzardo",
+  "alertSosReceived": "Segnale SOS ricevuto dall'Affidante",
+  "reportsTitle": "Report",
+  "reportsPeriodMonth": "Mese",
+  "reportsPeriodQuarter": "Trimestre",
+  "reportsPeriodYear": "Anno",
+  "reportsCategoryBreakdown": "Spese per Categoria",
+  "reportsDailyTrend": "Trend Giornaliero",
+  "reportsMonthlyComparison": "Confronto Mensile",
+  "reportsTopMerchants": "Esercenti Principali",
+  "reportsExportComingSoon": "Export PDF/CSV — In arrivo",
+  "reportsInsufficientData": "Serve almeno un mese di dati per i report completi",
+  "reportsTransactions": "{count} transazioni",
+  "@reportsTransactions": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  }
 }

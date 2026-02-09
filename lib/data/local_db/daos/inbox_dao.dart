@@ -22,6 +22,11 @@ class InboxDao extends DatabaseAccessor<AppDatabase> with _$InboxDaoMixin {
     .watch();
   }
   
+  Future<InboxMessage?> getMessageById(String id) {
+    return (select(inboxMessages)..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
+  }
+
   Future<void> markAsProcessed(String id, int chainSequence) {
     return (update(inboxMessages)..where((t) => t.id.equals(id))).write(
       InboxMessagesCompanion(

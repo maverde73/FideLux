@@ -64,5 +64,102 @@
       }
   },
   "transactionDetailSignatureVerified": "Signature Verified",
-  "transactionDetailRequestClarification": "Request Clarification"
+  "transactionDetailRequestClarification": "Request Clarification",
+
+  "ocrProcessing": "Analyzing receipt...",
+  "ocrComplete": "Analysis complete",
+  "ocrFailed": "Could not read the receipt. Enter data manually.",
+  "ocrRawText": "Raw OCR Text",
+  "ocrConfidenceHigh": "High",
+  "ocrConfidenceMedium": "Medium",
+  "ocrConfidenceLow": "Low",
+  "ocrSuggested": "Suggested by AI",
+  "categoryGroceries": "Groceries",
+  "categoryDining": "Dining",
+  "categoryTransport": "Transport",
+  "categoryUtilities": "Utilities",
+  "categoryHousing": "Housing",
+  "categoryHealth": "Health",
+  "categoryEntertainment": "Entertainment",
+  "categoryClothing": "Clothing",
+  "categoryEducation": "Education",
+  "categoryPersonalCare": "Personal Care",
+  "categoryGifts": "Gifts",
+  "categorySubscriptions": "Subscriptions",
+  "categoryGambling": "Gambling",
+  "categoryCash": "Cash Withdrawal",
+  "categoryOther": "Other",
+  "categorySalary": "Salary",
+  "categoryRefund": "Refund",
+  "categoryTransfer": "Transfer",
+  "categoryIncomeOther": "Other Income",
+  "gamblingAlert": "Gambling category detected",
+
+  "dashboardTitle": "Dashboard",
+  "dashboardScore": "FideLux Score",
+  "dashboardScoreHigh": "Excellent",
+  "dashboardScoreMedium": "Attention",
+  "dashboardScoreLow": "Critical",
+  "dashboardTotalBalance": "Total Balance",
+  "dashboardMonthExpenses": "Month Expenses",
+  "dashboardMonthIncome": "Month Income",
+  "dashboardTransactions": "Transactions",
+  "dashboardDocumentationRate": "Documentation Rate",
+  "dashboardDocumentationDays": "{documented}/{total} days",
+  "@dashboardDocumentationDays": {
+    "placeholders": {
+      "documented": { "type": "String" },
+      "total": { "type": "String" }
+    }
+  },
+  "dashboardTopCategories": "Top Categories",
+  "dashboardViewAll": "View All",
+  "dashboardNoData": "Start tracking to see your dashboard",
+  "dashboardAlerts": "Active Alerts",
+  "dashboardShowMoreAlerts": "Show {count} more",
+  "@dashboardShowMoreAlerts": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  },
+  "alertAdvisory": "Advisory",
+  "alertCritical": "Critical",
+  "alertSos": "SOS",
+  "alertCategorySpike": "{category} is {percent}% above average",
+  "@alertCategorySpike": {
+    "placeholders": {
+      "category": { "type": "String" },
+      "percent": { "type": "String" }
+    }
+  },
+  "alertNoDocumentation": "No transactions documented for {days} days",
+  "@alertNoDocumentation": {
+    "placeholders": {
+      "days": { "type": "String" }
+    }
+  },
+  "alertMultipleCashWithdrawals": "{count} cash withdrawals in 24 hours",
+  "@alertMultipleCashWithdrawals": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  },
+  "alertGamblingDetected": "Gambling transaction detected",
+  "alertSosReceived": "SOS signal received from Sharer",
+  "reportsTitle": "Reports",
+  "reportsPeriodMonth": "Month",
+  "reportsPeriodQuarter": "Quarter",
+  "reportsPeriodYear": "Year",
+  "reportsCategoryBreakdown": "Expenses by Category",
+  "reportsDailyTrend": "Daily Trend",
+  "reportsMonthlyComparison": "Monthly Comparison",
+  "reportsTopMerchants": "Top Merchants",
+  "reportsExportComingSoon": "Export PDF/CSV — Coming Soon",
+  "reportsInsufficientData": "At least one month of data needed for full reports",
+  "reportsTransactions": "{count} transactions",
+  "@reportsTransactions": {
+    "placeholders": {
+      "count": { "type": "String" }
+    }
+  }
 }

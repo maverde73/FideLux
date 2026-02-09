@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
+import 'package:fidelux/presentation/providers/dashboard_providers.dart';
 
 /// Main scaffold shell wrapping the 5-tab bottom navigation.
 ///
 /// Uses Material 3 [NavigationBar] with icons and labels from
 /// brand-guidelines.md §5.7.
-class MainShell extends StatelessWidget {
+class MainShell extends ConsumerWidget {
   const MainShell({super.key, required this.navigationShell});
 
   /// The navigation shell provided by [StatefulShellRoute].
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = L.of(context)!;
+    final criticalAlertCount = ref.watch(criticalAlertCountProvider);
 
     return Scaffold(
       body: SafeArea(child: navigationShell),
@@ -33,8 +36,16 @@ class MainShell extends StatelessWidget {
             label: l10n.tabInbox,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.dashboard_outlined),
-            selectedIcon: const Icon(Icons.dashboard),
+            icon: Badge(
+              isLabelVisible: criticalAlertCount > 0,
+              label: Text(criticalAlertCount.toString()),
+              child: const Icon(Icons.dashboard_outlined),
+            ),
+            selectedIcon: Badge(
+              isLabelVisible: criticalAlertCount > 0,
+              label: Text(criticalAlertCount.toString()),
+              child: const Icon(Icons.dashboard),
+            ),
             label: l10n.tabDashboard,
           ),
           NavigationDestination(

@@ -1,6 +1,6 @@
 
 import 'package:drift/drift.dart';
-import '../../domain/entities/transaction_category.dart';
+import '../../../domain/entities/transaction_category.dart';
 import '../app_database.dart';
 
 part 'transactions_dao.g.dart';
@@ -32,9 +32,8 @@ class TransactionsDao extends DatabaseAccessor<AppDatabase> with _$TransactionsD
     .get();
   }
   
-  // Correction: filtering with TypeConverter
   Future<List<Transaction>> getTransactionsByCategoryTyped(TransactionCategory category) {
-      return (select(transactions)..where((t) => t.category.equals(category))).get();
+      return (select(transactions)..where((t) => t.category.equals(category.name))).get();
   }
 
   Stream<List<Transaction>> watchRecentTransactions({int limit = 50}) {
@@ -49,8 +48,38 @@ class TransactionsDao extends DatabaseAccessor<AppDatabase> with _$TransactionsD
     final query = selectOnly(transactions)
       ..addColumns([amount])
       ..where(transactions.accountId.equals(accountId));
-      
+
     final result = await query.getSingle();
     return result.read(amount) ?? 0;
+  }
+
+  Future<List<Transaction>> getTransactionsByDateRange(DateTime start, DateTime end) {
+    return (select(transactions)
+      ..where((t) => t.date.isBiggerOrEqualValue(start) & t.date.isSmallerThanValue(end))
+      ..orderBy([(t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)]))
+    .get();
+  }
+
+  Future<int> getDocumentedDaysCount(DateTime start, DateTime end) async {
+    final txns = await getTransactionsByDateRange(start, end);
+    final days = txns.map((t) => DateTime.utc(t.date.year, t.date.month, t.date.day)).toSet();
+    return days.length;
+  }
+
+  Future<List<Transaction>> getCashTransactionsInPeriod(DateTime start, DateTime end) {
+    return (select(transactions)
+      ..where((t) => t.category.equals(TransactionCategory.cash.name) &
+                     t.date.isBiggerOrEqualValue(start) &
+                     t.date.isSmallerThanValue(end))
+      ..orderBy([(t) => OrderingTerm(expression: t.date, mode: OrderingMode.desc)]))
+    .get();
+  }
+
+  Future<List<Transaction>> getGamblingTransactionsInPeriod(DateTime start, DateTime end) {
+    return (select(transactions)
+      ..where((t) => t.category.equals(TransactionCategory.gambling.name) &
+                     t.date.isBiggerOrEqualValue(start) &
+                     t.date.isSmallerThanValue(end)))
+    .get();
   }
 }
