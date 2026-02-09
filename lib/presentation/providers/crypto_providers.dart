@@ -10,10 +10,7 @@ import 'accounting_providers.dart';
 
 /// Provider for the singleton [ChainRepository].
 final chainRepositoryProvider = Provider<ChainRepository>((ref) {
-  return ChainService(
-    ref.read(chainEventsDaoProvider),
-    ref.read(cryptoRepositoryProvider),
-  );
+  return ChainService(ref.read(chainEventsDaoProvider));
 });
 
 // --- Role Provider ---

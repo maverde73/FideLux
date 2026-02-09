@@ -63,7 +63,7 @@ final createAccountProvider = Provider<CreateAccount>((ref) {
   final chainDao = ref.watch(chainEventsDaoProvider);
   final cryptoRepo = ref.watch(cryptoRepositoryProvider);
 
-  final chainService = ChainService(chainDao, cryptoRepo);
+  final chainService = ChainService(chainDao);
 
   final keyStorage = ref.watch(keyStorageRepositoryProvider);
 
@@ -79,7 +79,7 @@ final createAccountProvider = Provider<CreateAccount>((ref) {
 final processInboxMessageProvider = Provider<ProcessInboxMessage>((ref) {
     final chainDao = ref.watch(chainEventsDaoProvider);
     final cryptoRepo = ref.watch(cryptoRepositoryProvider);
-    final chainService = ChainService(chainDao, cryptoRepo);
+    final chainService = ChainService(chainDao);
     
     return ProcessInboxMessage(
         chainService,

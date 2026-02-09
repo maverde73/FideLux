@@ -23,6 +23,7 @@
   },
 
   "accountsTitle": "Conti",
+  "accountsEmpty": "Nessun conto ancora",
   "accountsAdd": "Aggiungi Conto",
   "accountsName": "Nome",
   "accountsType": "Tipo",

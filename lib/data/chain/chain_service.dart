@@ -6,15 +6,13 @@ import '../../domain/entities/chain_event.dart';
 import '../../domain/entities/event_metadata.dart';
 import '../../domain/entities/event_type.dart';
 import '../../domain/repositories/chain_repository.dart';
-import '../../domain/repositories/crypto_repository.dart';
 import '../local_db/app_database.dart' as db;
 import '../local_db/daos/chain_events_dao.dart';
 
 class ChainService implements ChainRepository {
   final ChainEventsDao _dao;
-  final CryptoRepository _cryptoRepository;
 
-  ChainService(this._dao, this._cryptoRepository);
+  ChainService(this._dao);
 
   @override
   Future<ChainEvent> appendEvent(ChainEvent event) async {

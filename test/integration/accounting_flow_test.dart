@@ -43,7 +43,7 @@ void main() {
     cryptoRepo = MockCryptoRepository();
     keyStorage = MockKeyStorageRepository();
     
-    chainService = ChainService(chainDao, cryptoRepo);
+    chainService = ChainService(chainDao);
     createAccount = CreateAccount(
       accountsDao, 
       chainService, 

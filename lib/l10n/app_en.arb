@@ -28,6 +28,7 @@
   },
   
   "accountsTitle": "Accounts",
+  "accountsEmpty": "No accounts yet",
   "accountsAdd": "Add Account",
   "accountsName": "Name",
   "accountsType": "Type",

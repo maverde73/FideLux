@@ -22,7 +22,7 @@ void main() {
     database = AppDatabase.forTesting(NativeDatabase.memory());
     chainDao = ChainEventsDao(database);
     crypto = CryptoService();
-    chainService = ChainService(chainDao, crypto);
+    chainService = ChainService(chainDao);
     keeperIdentity = await crypto.generateIdentity(Role.keeper);
   });
 

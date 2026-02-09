@@ -26,7 +26,7 @@ class AccountsScreen extends ConsumerWidget {
                 children: [
                   const Icon(Icons.account_balance_wallet_outlined, size: 64, color: Colors.grey),
                   const SizedBox(height: 16),
-                  Text("No accounts yet"), // TODO: localized
+                  Text(l10n.accountsEmpty),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => _showAddAccountDialog(context, ref),
