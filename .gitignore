@@ -1,0 +1,36 @@
+# Environment & secrets
+.env
+.env.*
+credentials.json
+token.json
+
+# Temp files
+.tmp/
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# Build
+.next/
+build/
+dist/
+.dart_tool/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# === Framework LastReload ===
+.env
+.env.*
+credentials.json
+token.json
+.tmp/
