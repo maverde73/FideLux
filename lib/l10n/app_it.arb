@@ -1,0 +1,19 @@
+{
+  "@@locale": "it",
+  "appTitle": "FideLux",
+  "tabInbox": "Inbox",
+  "tabDashboard": "Dashboard",
+  "tabLedger": "Contabilità",
+  "tabReports": "Report",
+  "tabSettings": "Impostazioni",
+  "sharer": "Affidante",
+  "keeper": "Custode",
+  "fideluxScore": "Punteggio FideLux",
+  "eventChain": "Catena Eventi",
+  "sos": "SOS",
+  "settingsLanguage": "Lingua",
+  "settingsLanguageIt": "Italiano",
+  "settingsLanguageEn": "English",
+  "placeholderScreenTitle": "{screenName} - In arrivo",
+  "currencyFormat": "€{amount}"
+}

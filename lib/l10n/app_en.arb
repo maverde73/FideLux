@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+  "appTitle": "FideLux",
+  "tabInbox": "Inbox",
+  "tabDashboard": "Dashboard",
+  "tabLedger": "Ledger",
+  "tabReports": "Reports",
+  "tabSettings": "Settings",
+  "sharer": "Sharer",
+  "keeper": "Keeper",
+  "fideluxScore": "FideLux Score",
+  "eventChain": "Event Chain",
+  "sos": "SOS",
+  "settingsLanguage": "Language",
+  "settingsLanguageIt": "Italiano",
+  "settingsLanguageEn": "English",
+  "placeholderScreenTitle": "{screenName} - Coming Soon",
+  "@placeholderScreenTitle": {
+    "placeholders": {
+      "screenName": { "type": "String" }
+    }
+  },
+  "currencyFormat": "€{amount}",
+  "@currencyFormat": {
+    "placeholders": {
+      "amount": { "type": "String" }
+    }
+  }
+}
