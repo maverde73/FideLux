@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
 import 'package:fidelux/presentation/providers/dashboard_providers.dart';
+import 'package:fidelux/presentation/widgets/empty_state_view.dart';
 import 'package:fidelux/domain/entities/dashboard_data.dart';
 import 'package:fidelux/core/utils/currency_formatter.dart';
 import 'package:fidelux/theme/fidelux_colors.dart';
@@ -22,7 +24,7 @@ class DashboardScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text(e.toString())),
         data: (data) {
-          if (data.transactionCount == 0 && data.totalBalance == 0) {
+          if (data.accountCount == 0) {
             return _buildEmptyState(context, l10n);
           }
           return RefreshIndicator(
@@ -55,24 +57,17 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   Widget _buildEmptyState(BuildContext context, L l10n) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.dashboard_outlined,
-            size: 64,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
-          const SizedBox(height: FideLuxSpacing.s4),
-          Text(
-            l10n.dashboardNoData,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
+    return EmptyStateView(
+      icon: Icons.dashboard_outlined,
+      title: l10n.emptyDashboardTitle,
+      body: l10n.emptyDashboardBody,
+      bullets: [
+        l10n.emptyDashboardBullet1,
+        l10n.emptyDashboardBullet2,
+        l10n.emptyDashboardBullet3,
+      ],
+      ctaLabel: l10n.emptyDashboardCta,
+      onCtaPressed: () => GoRouter.of(context).go('/settings/accounts'),
     );
   }
 

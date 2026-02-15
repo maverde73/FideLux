@@ -1,23 +1,27 @@
+import 'email_auth_method.dart';
+
 class EmailConfig {
+  final String email;
+  final String sharerEmail;
+  final int pollingIntervalSeconds;
   final String imapHost;
   final int imapPort;
+  final bool imapUseSsl;
   final String smtpHost;
   final int smtpPort;
-  final String email;
-  final String password; // Should be handled securely
-  final bool useSsl;
-  final int pollingIntervalSeconds;
-  final String sharerEmail;
+  final bool smtpUseSsl;
+  final EmailAuthMethod authMethod;
 
   const EmailConfig({
-    required this.imapHost,
-    this.imapPort = 993,
-    required this.smtpHost,
-    this.smtpPort = 465,
     required this.email,
-    required this.password,
-    this.useSsl = true,
-    this.pollingIntervalSeconds = 300,
     required this.sharerEmail,
+    this.pollingIntervalSeconds = 300,
+    required this.imapHost,
+    required this.imapPort,
+    this.imapUseSsl = true,
+    required this.smtpHost,
+    required this.smtpPort,
+    this.smtpUseSsl = true,
+    required this.authMethod,
   });
 }

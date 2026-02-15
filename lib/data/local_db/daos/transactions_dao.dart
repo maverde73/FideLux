@@ -11,6 +11,8 @@ class TransactionsDao extends DatabaseAccessor<AppDatabase> with _$TransactionsD
 
   Future<void> insertTransaction(TransactionsCompanion transaction) => into(transactions).insert(transaction);
 
+  Future<void> updateTransaction(TransactionsCompanion transaction) => update(transactions).replace(transaction);
+
   Future<Transaction?> getTransactionById(String id) => (select(transactions)..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<List<Transaction>> getTransactionsByAccount(String accountId) {

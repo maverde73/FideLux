@@ -1,0 +1,20 @@
+{
+  "client_id": "75b3f559-e24c-4a48-8b89-79c1a1556feb",
+  "redirect_uri": "msauth://com.lastreload.fidelux/Aug2LedtnA8%2FANOE5kfeDvQUISA%3D",
+  "authorization_user_agent": "BROWSER",
+  "account_mode": "MULTIPLE",
+  "broker_redirect_uri_registered": false,
+  "authorities": [
+    {
+      "type": "AAD",
+      "audience": {
+        "type": "AzureADandPersonalMicrosoftAccount"
+      },
+      "default": true
+    }
+  ],
+  "logging": {
+    "pii_enabled": true,
+    "log_level": "VERBOSE"
+  }
+}

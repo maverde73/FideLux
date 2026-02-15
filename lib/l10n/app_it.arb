@@ -2,10 +2,10 @@
   "@@locale": "it",
   "appTitle": "FideLux",
   "tabInbox": "Inbox",
-  "tabDashboard": "Dashboard",
-  "tabLedger": "Contabilità",
+  "tabDashboard": "Home",
+  "tabLedger": "Registro",
   "tabReports": "Report",
-  "tabSettings": "Impostazioni",
+  "tabSettings": "Profilo",
   "sharer": "Affidante",
   "keeper": "Custode",
   "fideluxScore": "Punteggio FideLux",
@@ -15,7 +15,7 @@
   "settingsLanguageIt": "Italiano",
   "settingsLanguageEn": "English",
   "placeholderScreenTitle": "{screenName} - In arrivo",
-  "currencyFormat": "€{amount}",
+  "currencyFormat": "\u20ac{amount}",
   "@currencyFormat": {
     "placeholders": {
       "amount": { "type": "String" }
@@ -33,14 +33,14 @@
   "accountTypeCreditCard": "Carta di Credito",
   "accountTypeCash": "Contanti",
   "accountTypeOther": "Altro",
-  
+
   "ledgerTitle": "Libro Mastro",
   "ledgerFilterAll": "Tutti",
   "ledgerFilterAccount": "Conto",
   "ledgerFilterCategory": "Categoria",
   "ledgerFilterPeriod": "Periodo",
   "ledgerEmpty": "Nessuna transazione trovata",
-  
+
   "processMessageTitle": "Elabora Transazione",
   "processMessageMerchant": "Esercente / Descrizione",
   "processMessageAmount": "Importo",
@@ -49,8 +49,8 @@
   "processMessageDate": "Data",
   "processMessageNotes": "Note",
   "processMessageConfirm": "Conferma",
-  "processMessageConfirmDialog": "Confermi i dettagli? Verrà aggiunto alla catena.",
-  
+  "processMessageConfirmDialog": "Confermi i dettagli? Verr\u00e0 aggiunto alla catena.",
+
   "transactionDetailTitle": "Dettagli Transazione",
   "transactionDetailChainInfo": "Verifica Catena",
   "transactionDetailSequence": "Sequenza #{sequence}",
@@ -121,7 +121,7 @@
   "alertAdvisory": "Avviso",
   "alertCritical": "Critico",
   "alertSos": "SOS",
-  "alertCategorySpike": "{category} è {percent}% sopra la media",
+  "alertCategorySpike": "{category} \u00e8 {percent}% sopra la media",
   "@alertCategorySpike": {
     "placeholders": {
       "category": { "type": "String" },
@@ -150,12 +150,76 @@
   "reportsDailyTrend": "Trend Giornaliero",
   "reportsMonthlyComparison": "Confronto Mensile",
   "reportsTopMerchants": "Esercenti Principali",
-  "reportsExportComingSoon": "Export PDF/CSV — In arrivo",
+  "reportsExportComingSoon": "Export PDF/CSV \u2014 In arrivo",
   "reportsInsufficientData": "Serve almeno un mese di dati per i report completi",
   "reportsTransactions": "{count} transazioni",
   "@reportsTransactions": {
     "placeholders": {
       "count": { "type": "String" }
     }
-  }
+  },
+
+  "emailConfigTitle": "Connessione Email",
+  "emailConfigDescription": "Inserisci la tua email per ricevere i messaggi dall'Affidante.",
+  "emailConfigEnterEmail": "Il tuo indirizzo email",
+  "emailConfigSharerEmail": "Email dell'Affidante",
+  "emailConfigDiscover": "Continua",
+  "emailConfigDiscovering": "Rilevamento impostazioni...",
+  "emailConfigSignInGoogle": "Accedi con Google",
+  "emailConfigSignInMicrosoft": "Accedi con Microsoft",
+  "emailConfigEnterPassword": "Password App",
+  "emailConfigPasswordHint": "Usa una password specifica per app",
+  "emailConfigConnect": "Connetti",
+  "emailConfigTesting": "Test connessione...",
+  "emailConfigDisconnect": "Disconnetti",
+  "emailConfigSave": "Salva",
+  "emailConnected": "Connesso come {email}",
+  "@emailConnected": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "emailNotConnected": "Non connesso",
+  "emailProviderDetected": "Rilevato: {provider}",
+  "@emailProviderDetected": {
+    "placeholders": {
+      "provider": { "type": "String" }
+    }
+  },
+
+  "emptyDashboardTitle": "La tua dashboard \u00e8 pronta",
+  "emptyDashboardBody": "Collega un conto ed elabora il primo scontrino per vedere:",
+  "emptyDashboardBullet1": "Punteggio FideLux e tendenze",
+  "emptyDashboardBullet2": "Analisi delle spese mensili",
+  "emptyDashboardBullet3": "Avvisi in tempo reale",
+  "emptyDashboardCta": "Aggiungi Conto",
+  "emptyInboxTitle": "Nessun messaggio",
+  "emptyInboxBody": "Collega la tua email per ricevere i documenti dall'Affidante.",
+  "emptyInboxCta": "Connetti Email",
+  "emptyLedgerTitle": "Nessuna transazione",
+  "emptyLedgerBody": "Elabora i messaggi in entrata o inserisci transazioni manualmente.",
+  "emptyLedgerCta": "Vai alla Inbox",
+  "emptyAccountsTitle": "Nessun conto ancora",
+  "emptyAccountsBody": "Crea il primo conto per iniziare a monitorare saldi e transazioni.",
+  "emptyAccountsCta": "Aggiungi Conto",
+  "emptyReportsTitle": "Dati insufficienti",
+  "emptyReportsBody": "Aggiungi transazioni per sbloccare analisi e confronti.",
+  "emptyReportsCta": "Vai al Registro",
+  "accountsCreate": "Crea",
+  "ledgerManualEntrySoon": "Inserimento manuale in arrivo",
+
+  "settingsSectionAccount": "Account",
+  "settingsSectionPreferences": "Preferenze",
+  "settingsSectionAbout": "Info",
+
+  "logoutTitle": "Esci",
+  "logoutSubtitle": "Resetta tutti i dati e disconnetti",
+  "logoutConfirmTitle": "Sei sicuro?",
+  "logoutConfirmBody": "Questa operazione cancellerà permanentemente tutti i dati locali: conti, transazioni, eventi della catena, messaggi inbox e chiavi crittografiche.",
+  "logoutConfirmButton": "Sì, cancella tutto",
+  "logoutFinalTitle": "Ultima conferma",
+  "logoutFinalBody": "Questa azione è irreversibile. Tutti i dati di FideLux verranno cancellati.",
+  "logoutFinalButton": "Conferma logout",
+  "logoutSuccess": "Tutti i dati sono stati cancellati.",
+  "cancel": "Annulla"
 }

@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
+import 'package:fidelux/presentation/widgets/empty_state_view.dart';
+import 'package:fidelux/theme/fidelux_colors.dart';
+import 'package:fidelux/theme/fidelux_spacing.dart';
+import 'package:fidelux/theme/fidelux_theme.dart';
 
 import '../../../data/local_db/app_database.dart';
 import '../../providers/accounting_providers.dart';
@@ -40,14 +44,14 @@ class LedgerScreen extends ConsumerWidget {
             height: 50,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: FideLuxSpacing.s4),
               children: [
                 FilterChip(label: Text(l10n.ledgerFilterAll), onSelected: (val) {}, selected: true),
-                const SizedBox(width: 8),
+                const SizedBox(width: FideLuxSpacing.s2),
                 FilterChip(label: Text(l10n.ledgerFilterAccount), onSelected: (val) {}),
-                const SizedBox(width: 8),
+                const SizedBox(width: FideLuxSpacing.s2),
                 FilterChip(label: Text(l10n.ledgerFilterCategory), onSelected: (val) {}),
-                const SizedBox(width: 8),
+                const SizedBox(width: FideLuxSpacing.s2),
                 FilterChip(label: Text(l10n.ledgerFilterPeriod), onSelected: (val) {}),
               ],
             ),
@@ -57,40 +61,38 @@ class LedgerScreen extends ConsumerWidget {
             child: transactionsAsync.when(
               data: (transactions) {
                 if (transactions.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.receipt_long, size: 64, color: Colors.grey),
-                        const SizedBox(height: 16),
-                        Text(l10n.ledgerEmpty),
-                      ],
-                    ),
+                  return EmptyStateView(
+                    icon: Icons.receipt_long_outlined,
+                    title: l10n.emptyLedgerTitle,
+                    body: l10n.emptyLedgerBody,
+                    ctaLabel: l10n.emptyLedgerCta,
+                    onCtaPressed: () => GoRouter.of(context).go('/inbox'),
                   );
                 }
                 return ListView.separated(
                   itemCount: transactions.length,
-                  separatorBuilder: (_, __) => Divider(indent: 72),
+                  separatorBuilder: (_, __) => Divider(
+                    indent: FideLuxSpacing.s16,
+                    height: 1,
+                  ),
                   itemBuilder: (context, index) {
                     final tx = transactions[index];
-                    final category = tx.category; // Now proper enum if converter works
-                    // If converter fails, it might be string? No, Drift generated class uses the converted type.
-                    
+                    final category = tx.category;
                     final isExpense = tx.amount < 0;
                     
                     return ListTile(
                       leading: CircleAvatar(
-                        backgroundColor: category.color.withOpacity(0.2),
+                        backgroundColor: category.color.withValues(alpha: 0.15),
                         child: Icon(category.icon, color: category.color),
                       ),
                       title: Text(tx.merchant ?? tx.description),
                       subtitle: Text('${_formatDate(tx.date)} • ${category.localizedName}'),
                       trailing: Text(
-                        '${isExpense ? '' : '+'}${ (tx.amount/100).toStringAsFixed(2) }', // Currency symbol?
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: isExpense ? Colors.red : Colors.green,
-                          fontFamily: 'RobotoMono', // Monospace if available
-                          fontWeight: FontWeight.bold,
+                        '${isExpense ? '' : '+'}${(tx.amount / 100).toStringAsFixed(2)}',
+                        style: FideLuxFinancialStyles.transactionAmount.copyWith(
+                          color: isExpense
+                              ? FideLuxColors.error
+                              : FideLuxColors.success,
                         ),
                       ),
                       onTap: () {
@@ -108,17 +110,9 @@ class LedgerScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Manual entry without inbox
-          // Navigate to process message screen but with empty message?
-          // Or separate manual entry screen reusing the form?
-          // ProcessMessageScreen requires InboxMessage.
-          // I should refactor form to be reusable or create dummy message.
-          // For MVP, limit to Inbox processing or Create Account.
-          // User asked for FAB "+" in Step 6 Rule 4.
-          // "FAB "+" per inserimento manuale transazione (senza messaggio inbox)"
-          // I'll create a variant or pass null message if allowed.
-          // For now, I'll show snackbar "Coming Soon" or implement basic redirect if time permits.
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Manual entry coming soon")));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.ledgerManualEntrySoon)),
+          );
         },
         child: const Icon(Icons.add),
       ),

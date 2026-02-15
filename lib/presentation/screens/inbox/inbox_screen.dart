@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
+import 'package:fidelux/presentation/widgets/empty_state_view.dart';
+import 'package:fidelux/theme/fidelux_colors.dart';
+import 'package:fidelux/theme/fidelux_spacing.dart';
 
 import 'package:fidelux/data/local_db/app_database.dart' as db;
 import '../../providers/accounting_providers.dart';
@@ -22,13 +25,12 @@ class InboxScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inbox'), // Localize
+        title: Text(l10n.tabInbox),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
-               // Trigger FetchInbox use case manually?
-               // ref.read(fetchInboxProvider).call();
+               // Trigger FetchInbox use case manually
             },
           ),
         ],
@@ -36,28 +38,39 @@ class InboxScreen extends ConsumerWidget {
       body: messagesAsync.when(
         data: (messages) {
           if (messages.isEmpty) {
-            return Center(child: Text(l10n.ledgerEmpty)); // Reuse "No transactions" or similar
+            return EmptyStateView(
+              icon: Icons.mail_outline,
+              title: l10n.emptyInboxTitle,
+              body: l10n.emptyInboxBody,
+              ctaLabel: l10n.emptyInboxCta,
+              onCtaPressed: () =>
+                  GoRouter.of(context).go('/settings/email-config'),
+            );
           }
           return ListView.separated(
+            padding: const EdgeInsets.symmetric(vertical: FideLuxSpacing.s2),
             itemCount: messages.length,
-            separatorBuilder: (_, __) => const Divider(),
+            separatorBuilder: (_, __) => const Divider(
+              indent: FideLuxSpacing.s16,
+              height: 1,
+            ),
             itemBuilder: (context, index) {
               final msg = messages[index];
-              // msg is Drift class `InboxMessage`.
-              // It has fields: id, senderEmail, subject, status...
-              
+
               return ListTile(
-                leading: Icon(Icons.mark_email_read, color: Colors.green),
+                leading: Icon(
+                  Icons.mark_email_read,
+                  color: FideLuxColors.inboxProcessed,
+                ),
                 title: Text(msg.subject ?? 'No Subject'),
                 subtitle: Text(msg.senderEmail),
                 trailing: Text(
-                  _formatDate(msg.receivedAt), // Localize date
-                  style: Theme.of(context).textTheme.bodySmall,
+                  _formatDate(msg.receivedAt),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
                 onTap: () {
-                  // Navigate to ProcessMessageScreen
-                  // Pass ID or Object. 
-                  // GoRouter path: '/inbox/process/:id'
                   context.push('/inbox/process/${msg.id}');
                 },
               );

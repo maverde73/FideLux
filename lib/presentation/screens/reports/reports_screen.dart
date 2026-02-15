@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:fidelux/l10n/generated/app_localizations.dart';
 import 'package:fidelux/presentation/providers/report_providers.dart';
+import 'package:fidelux/presentation/widgets/empty_state_view.dart';
 import 'package:fidelux/domain/entities/report_data.dart';
 import 'package:fidelux/domain/entities/transaction_category.dart';
 import 'package:fidelux/core/utils/currency_formatter.dart';
@@ -83,25 +85,12 @@ class ReportsScreen extends ConsumerWidget {
   }
 
   Widget _buildEmptyState(BuildContext context, L l10n) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.bar_chart_outlined,
-            size: 64,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
-          const SizedBox(height: FideLuxSpacing.s4),
-          Text(
-            l10n.reportsInsufficientData,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+    return EmptyStateView(
+      icon: Icons.bar_chart_outlined,
+      title: l10n.emptyReportsTitle,
+      body: l10n.emptyReportsBody,
+      ctaLabel: l10n.emptyReportsCta,
+      onCtaPressed: () => GoRouter.of(context).go('/ledger'),
     );
   }
 

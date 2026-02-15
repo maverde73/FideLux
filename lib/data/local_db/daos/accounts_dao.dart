@@ -33,4 +33,9 @@ class AccountsDao extends DatabaseAccessor<AppDatabase> with _$AccountsDaoMixin 
     final result = await query.getSingle();
     return result.read(total) ?? 0;
   }
+  Future<void> updateAccount(AccountsCompanion account) => update(accounts).replace(account);
+
+  Future<void> deleteAccount(String id) => (update(accounts)..where((t) => t.id.equals(id))).write(
+    const AccountsCompanion(isActive: Value(false)),
+  );
 }

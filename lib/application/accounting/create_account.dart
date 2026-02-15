@@ -73,55 +73,40 @@ class CreateAccount {
       'currency': currency,
     };
 
-    // Sign with Keeper key
+    // Sign with Keeper key (optional — pairing may not be done yet)
     final keeperKey = await _keyStorageRepository.loadPrivateKey(Role.keeper);
-    if (keeperKey == null) throw Exception("Keeper identity not found");
 
-    // We need to compute hash to sign it? 
-    // Usually we sign the hash or the content.
-    // System definition: Keeper signs the event hash? Or payload?
-    // D02: Keeper signs (payload + metadata?).
-    // `ChainEvent.computeHash` uses `keeperSignature`, so signature must be computed BEFORE hash.
-    // Circular dependency? 
-    // No, signature signs (payload + ...). Hash includes signature.
-    // We need to sign something that does NOT include the signature.
-    // What does Keeper sign?
-    // "payload + timestamp + sequence + previousHash + eventType..."
-    // Let's assume signing the payload json + timestamp + sequence for now, or check D02 specs.
-    // D02 `process_inbox_message` logic or similar.
-    // In `ChainService` tests (D02), we likely simplified.
-    // Let's sign the `payload` JSON string for simplicity as per D04.
-    // Or stricter: `sequence|previousHash|eventType|payload`.
-    
-    final payloadJson = jsonEncode(payload);
-    final signableContent = '$sequence|$previousHash|${now.toIso8601String()}|${EventType.genesis.name}|$payloadJson';
-    final signature = await _cryptoRepository.sign(utf8.encode(signableContent), keeperKey);
+    if (keeperKey != null) {
+      final payloadJson = jsonEncode(payload);
+      final signableContent = '$sequence|$previousHash|${now.toIso8601String()}|${EventType.genesis.name}|$payloadJson';
+      final signature = await _cryptoRepository.sign(utf8.encode(signableContent), keeperKey);
 
-    final eventHash = ChainEvent.computeHash(
-      sequence: sequence,
-      previousHash: previousHash,
-      timestamp: now,
-      eventType: EventType.genesis,
-      payload: payload,
-      keeperSignature: signature,
-    );
+      final eventHash = ChainEvent.computeHash(
+        sequence: sequence,
+        previousHash: previousHash,
+        timestamp: now,
+        eventType: EventType.genesis,
+        payload: payload,
+        keeperSignature: signature,
+      );
 
-    final event = ChainEvent(
-      sequence: sequence,
-      previousHash: previousHash,
-      timestamp: now,
-      eventType: EventType.genesis,
-      payload: payload,
-      keeperSignature: signature,
-      metadata: EventMetadata(
-        source: EventSource.manual,
-        trustLevel: 6, // High trust (manual creation)
-        aiEngine: null,
-      ),
-      hash: eventHash,
-    );
+      final event = ChainEvent(
+        sequence: sequence,
+        previousHash: previousHash,
+        timestamp: now,
+        eventType: EventType.genesis,
+        payload: payload,
+        keeperSignature: signature,
+        metadata: EventMetadata(
+          source: EventSource.manual,
+          trustLevel: 6,
+          aiEngine: null,
+        ),
+        hash: eventHash,
+      );
 
-    await _chainRepository.appendEvent(event);
+      await _chainRepository.appendEvent(event);
+    }
     
     // 3. Create Transaction if initial balance != 0?
     // "Initial Balance" is in account table. 

@@ -8,6 +8,8 @@ import '../../data/local_db/daos/inbox_dao.dart';
 import '../../data/chain/chain_service.dart';
 import '../../application/accounting/create_account.dart';
 import '../../application/accounting/process_inbox_message.dart';
+import '../../application/accounting/update_account.dart';
+import '../../application/accounting/delete_account.dart';
 import '../providers/core_providers.dart';
 
 // We need access to repositories.
@@ -97,4 +99,38 @@ final processInboxMessageProvider = Provider<ProcessInboxMessage>((ref) {
 // I need to find where they are. 
 // They are likely in `lib/presentation/providers/core_providers.dart` or similar if they exist.
 // If not, I should create `lib/presentation/providers/core_providers.dart` to hold singletons.
+
+final updateAccountProvider = Provider<UpdateAccount>((ref) {
+  final accountsDao = ref.watch(accountsDaoProvider);
+  final transactionsDao = ref.watch(transactionsDaoProvider);
+  final chainDao = ref.watch(chainEventsDaoProvider);
+  final cryptoRepo = ref.watch(cryptoRepositoryProvider);
+  final keyStorage = ref.watch(keyStorageRepositoryProvider);
+  
+  final chainService = ChainService(chainDao);
+
+  return UpdateAccount(
+    accountsDao,
+    chainService,
+    transactionsDao,
+    keyStorage,
+    cryptoRepo,
+  );
+});
+
+final deleteAccountProvider = Provider<DeleteAccount>((ref) {
+  final accountsDao = ref.watch(accountsDaoProvider);
+  final chainDao = ref.watch(chainEventsDaoProvider);
+  final cryptoRepo = ref.watch(cryptoRepositoryProvider);
+  final keyStorage = ref.watch(keyStorageRepositoryProvider);
+  
+  final chainService = ChainService(chainDao);
+
+  return DeleteAccount(
+    accountsDao,
+    chainService,
+    keyStorage,
+    cryptoRepo,
+  );
+});
 

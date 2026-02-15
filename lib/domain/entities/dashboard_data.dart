@@ -11,6 +11,7 @@ class DashboardData {
   final int monthExpenses;
   final int monthIncome;
   final int transactionCount;
+  final int accountCount;
   final double documentationRate;
   final int documentedDays;
   final int totalDays;
@@ -26,6 +27,7 @@ class DashboardData {
     required this.monthExpenses,
     required this.monthIncome,
     required this.transactionCount,
+    required this.accountCount,
     required this.documentationRate,
     required this.documentedDays,
     required this.totalDays,

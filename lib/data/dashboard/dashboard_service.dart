@@ -23,6 +23,8 @@ class DashboardService implements DashboardRepository {
     final nextMonthStart = DateTime.utc(now.year, now.month + 1, 1);
 
     final totalBalance = await _accountsDao.getTotalBalance();
+    final allAccounts = await _accountsDao.getAllAccounts();
+    final accountCount = allAccounts.where((a) => a.isActive).length;
     final monthTransactions = await _transactionsDao.getTransactionsByDateRange(monthStart, nextMonthStart);
 
     int monthExpenses = 0;
@@ -70,6 +72,7 @@ class DashboardService implements DashboardRepository {
       monthExpenses: monthExpenses,
       monthIncome: monthIncome,
       transactionCount: monthTransactions.length,
+      accountCount: accountCount,
       documentationRate: documentationRate.clamp(0.0, 1.0),
       documentedDays: documentedDays,
       totalDays: daysElapsed,

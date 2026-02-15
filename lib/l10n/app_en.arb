@@ -2,8 +2,8 @@
   "@@locale": "en",
   "appTitle": "FideLux",
   "tabInbox": "Inbox",
-  "tabDashboard": "Dashboard",
-  "tabLedger": "Ledger",
+  "tabDashboard": "Home",
+  "tabLedger": "Book",
   "tabReports": "Reports",
   "tabSettings": "Settings",
   "sharer": "Sharer",
@@ -20,13 +20,13 @@
       "screenName": { "type": "String" }
     }
   },
-  "currencyFormat": "€{amount}",
+  "currencyFormat": "\u20ac{amount}",
   "@currencyFormat": {
     "placeholders": {
       "amount": { "type": "String" }
     }
   },
-  
+
   "accountsTitle": "Accounts",
   "accountsEmpty": "No accounts yet",
   "accountsAdd": "Add Account",
@@ -38,14 +38,14 @@
   "accountTypeCreditCard": "Credit Card",
   "accountTypeCash": "Cash",
   "accountTypeOther": "Other",
-  
+
   "ledgerTitle": "Ledger",
   "ledgerFilterAll": "All",
   "ledgerFilterAccount": "Account",
   "ledgerFilterCategory": "Category",
   "ledgerFilterPeriod": "Period",
   "ledgerEmpty": "No transactions found",
-  
+
   "processMessageTitle": "Process Transaction",
   "processMessageMerchant": "Merchant / Description",
   "processMessageAmount": "Amount",
@@ -55,7 +55,7 @@
   "processMessageNotes": "Notes",
   "processMessageConfirm": "Confirm",
   "processMessageConfirmDialog": "Confirm transaction details? This will append to chain.",
-  
+
   "transactionDetailTitle": "Transaction Details",
   "transactionDetailChainInfo": "Chain Verification",
   "transactionDetailSequence": "Sequence #{sequence}",
@@ -155,12 +155,76 @@
   "reportsDailyTrend": "Daily Trend",
   "reportsMonthlyComparison": "Monthly Comparison",
   "reportsTopMerchants": "Top Merchants",
-  "reportsExportComingSoon": "Export PDF/CSV — Coming Soon",
+  "reportsExportComingSoon": "Export PDF/CSV \u2014 Coming Soon",
   "reportsInsufficientData": "At least one month of data needed for full reports",
   "reportsTransactions": "{count} transactions",
   "@reportsTransactions": {
     "placeholders": {
       "count": { "type": "String" }
     }
-  }
+  },
+
+  "emailConfigTitle": "Email Connection",
+  "emailConfigDescription": "Enter your email to receive messages from your Sharer.",
+  "emailConfigEnterEmail": "Your Email Address",
+  "emailConfigSharerEmail": "Sharer's Email Address",
+  "emailConfigDiscover": "Continue",
+  "emailConfigDiscovering": "Discovering settings...",
+  "emailConfigSignInGoogle": "Sign in with Google",
+  "emailConfigSignInMicrosoft": "Sign in with Microsoft",
+  "emailConfigEnterPassword": "App Password",
+  "emailConfigPasswordHint": "Use an app-specific password",
+  "emailConfigConnect": "Connect",
+  "emailConfigTesting": "Testing connection...",
+  "emailConfigDisconnect": "Disconnect",
+  "emailConfigSave": "Save",
+  "emailConnected": "Connected as {email}",
+  "@emailConnected": {
+    "placeholders": {
+      "email": { "type": "String" }
+    }
+  },
+  "emailNotConnected": "Not connected",
+  "emailProviderDetected": "Detected: {provider}",
+  "@emailProviderDetected": {
+    "placeholders": {
+      "provider": { "type": "String" }
+    }
+  },
+
+  "emptyDashboardTitle": "Your dashboard is ready",
+  "emptyDashboardBody": "Connect an account and process your first receipt to see:",
+  "emptyDashboardBullet1": "FideLux Score & trends",
+  "emptyDashboardBullet2": "Monthly spending breakdown",
+  "emptyDashboardBullet3": "Real-time alerts",
+  "emptyDashboardCta": "Add Account",
+  "emptyInboxTitle": "No messages yet",
+  "emptyInboxBody": "Connect your email to automatically receive receipts from your Sharer.",
+  "emptyInboxCta": "Connect Email",
+  "emptyLedgerTitle": "No transactions yet",
+  "emptyLedgerBody": "Process inbox messages or add transactions manually to build your ledger.",
+  "emptyLedgerCta": "Go to Inbox",
+  "emptyAccountsTitle": "No accounts yet",
+  "emptyAccountsBody": "Create your first account to start tracking balances and transactions.",
+  "emptyAccountsCta": "Add Account",
+  "emptyReportsTitle": "Not enough data",
+  "emptyReportsBody": "Add transactions to unlock category breakdowns, trends and comparisons.",
+  "emptyReportsCta": "Go to Ledger",
+  "accountsCreate": "Create",
+  "ledgerManualEntrySoon": "Manual entry coming soon",
+
+  "settingsSectionAccount": "Account",
+  "settingsSectionPreferences": "Preferences",
+  "settingsSectionAbout": "About",
+
+  "logoutTitle": "Logout",
+  "logoutSubtitle": "Reset all data and disconnect",
+  "logoutConfirmTitle": "Are you sure?",
+  "logoutConfirmBody": "This will permanently delete all local data: accounts, transactions, chain events, inbox messages, and cryptographic keys.",
+  "logoutConfirmButton": "Yes, delete everything",
+  "logoutFinalTitle": "Last chance",
+  "logoutFinalBody": "This action is irreversible. All your FideLux data will be erased.",
+  "logoutFinalButton": "Confirm logout",
+  "logoutSuccess": "All data has been erased.",
+  "cancel": "Cancel"
 }

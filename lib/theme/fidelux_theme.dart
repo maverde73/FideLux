@@ -93,20 +93,20 @@ ThemeData get fideluxTheme {
 
     // ── Navigation Bar (brand §5.7) ──────────────────────────────────
     navigationBarTheme: NavigationBarThemeData(
-      height: 80,
+      height: 72,
       indicatorColor: FideLuxColors.primaryContainer,
       backgroundColor: FideLuxColors.surface,
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return const TextStyle(
             fontSize: 12,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             color: FideLuxColors.onPrimaryContainer,
           );
         }
         return const TextStyle(
           fontSize: 12,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w400,
           color: FideLuxColors.onSurfaceVariant,
         );
       }),
@@ -114,7 +114,7 @@ ThemeData get fideluxTheme {
         if (states.contains(WidgetState.selected)) {
           return const IconThemeData(
             color: FideLuxColors.onPrimaryContainer,
-            size: 24,
+            size: 26,
           );
         }
         return const IconThemeData(
